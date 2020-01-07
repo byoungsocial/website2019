@@ -1,0 +1,23 @@
+@import url('../fonts/Fjalla_One/fjalla-one.css');
+@import url('../fonts/Lato/lato.css');
+
+@font-face{
+    font-family: 'Bayshore';
+    src: url('../fonts/Bayshore.ttf');
+}
+
+.fjalla-one{
+    font-family: 'Fjalla One', sans-serif;
+}
+
+.bayshore{
+    font-family: 'Bayshore';
+}
+
+.lato{
+    font-family: 'Lato', sans-serif;
+}
+
+body{
+    font-family: 'Lato', sans-serif;
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+<html lang="en">
+
+
+
+<head>
+<meta name="viewport" content="initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0;"/>
+<link rel="stylesheet" type="text/css" href="../pinworksplus.css" />
+<link rel="stylesheet" type="text/css" href="assets/page.css" />
+<link rel="stylesheet" type="text/css" href="../baguetteBox.css" />
+<script src="assets/jquery-1.11.3.min.js"></script> 
+<script src="../baguetteBox.js"></script> 
+<script src='../pinworksplus.js'></script>
+<script src='assets/generatepins.js'></script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<title>Pinterest API jQuery Widget</title>
+
+
+
+
+</head>
+
+
+
+<body class='single' style='margin:0'>
+
+
+
+<div class='header'>
+<div class='buttons'><div class='button'></div><div class='button'></div><div class='button'></div></div>
+<div class='headerplace'><img class='headerimg' src='assets/header.png' /> <h1>Pinterest API jQuery Wall</h1></div>
+</div>
+<div class='pinwidget'>
+<div class='form'>
+<div class='area'>
+<div class="field">
+                        <label>
+                            <span class="label">Username:</span>
+
+                            <div class="field-input-username">
+                                <input id='username' class='inputuser' type="text" name="username" value="jpjustjen">
+                            </div>
+                        </label>
+ </div>
+ <div class="field">
+                        <label>
+                            <span class="label">Board:</span>
+                            <div class="field-input-board">
+                                <input id='board' class='inputboard' type="text" name="board" value="places-i-want-to-visit">
+                            </div>
+                        </label>
+</div>
+
+<div class="field">
+                        <label>
+                            <span class="label">Show Header:</span>
+                            <input id='header' class='inputheader' type="checkbox" name="show_header" value="true" checked="">
+                        </label>
+ </div>
+ </div>
+ <div class='area'>
+  <div class="field">
+                        <label>
+                            <span class="label">Widget width</span>
+                            <div class="field-input-size">
+                                <input id='width' class='inputwidth' type="text" name="width" value="1200"><span class="field-hint">px</span>
+                            </div>
+                        </label> <label class="responsive">
+                            <input id='responsivewidth' class='inputresponsive' type="checkbox" name="responsive" value="true" checked="">
+                            <span class="label">Responsive</span>
+                        </label>
+</div>
+  <div class="field">
+                        <label>
+                            <span class="label">Widget height</span>
+                            <div class="field-input-size">
+                                <input id='height' class='inputheight' type="text" name="height" value="600"><span class="field-hint">px</span>
+                            </div>
+                        </label> <label class="autoheight">
+                            <input id='autoheight' class='inputautoheight' type="checkbox" name="Auto" value="1" checked="">
+                            <span class="label">Auto</span>
+                        </label>
+</div>
+  <div class="field">
+                        <label>
+                            <span class="label">Pin width</span>
+                            <div class="field-input-size">
+                                <input id='pinwidth' class='inputpinwidth' type="text" name="height" value="140"><span class="field-hint">px</span>
+                            </div>
+                        </label> <label class="defaultpinwidth">
+                            <input id='defaultpinwidth' class='inputdefaultwidth' type="checkbox" name="defaultwidth" value="1" checked="">
+                            <span class="label">Default (237px)</span>
+                        </label>
+</div>
+</div>
+<div class='area'>
+  <div class="field">
+                        <label>
+                            <span class="label">Pins to show</span>
+                            <div class="field-input-size">
+                                <input id='pinstoshow' class='inputpinstoshow' type="text" name="height" value="20">
+                            </div>
+                        </label> <label class="pinlimit">
+                            <input id='showmaxpins' class='inputpinmax' type="checkbox" name="defaultwidth" value="1" checked="">
+                            <span class="label">Maximum (50)</span>
+                        </label>
+</div>
+<div class="field clear">
+                        <label>
+                            <span class="label">Show Pin button:</span>
+                            <input id='showpinbtn' class='inputshowpinbtn' type="checkbox" name="show_pinbtn" value="true" checked="">
+                        </label>
+ </div>
+ <div class="field clear">
+                        <label>
+                          <span class="label">Show source link</span>
+                            <input id='showpinsrc' class='inputshowsrc' type="checkbox" name="show_sourcelink" value="true" checked=""> 
+							
+                        </label>
+ </div>
+  <div class="field descr clear">
+                        <label>
+                            <span class="label">Show description</span>
+                           <select id='showdescr' class='inputdescr' name="pindescr">
+                                <option value="yes" selected="">Yes</option>
+                                <option value="no">No</option>
+                                <option value="trim">Trim to</option>
+                            </select>
+                        </label>
+						<label>
+                            <div class="field-input-size trimto">
+                                <input id='descrlength' class='inputdescrlength' type="text" name="height" value="50"><span class="field-hint">characters</span>
+                            </div>
+                        </label>
+ </div>
+ </div>
+ <div class='area'>
+ <div class="field gallery clear">
+                        <label>
+                            <span class="label">Show gallery</span>
+                           <select id='showgal' class='inputgal' name="pingal">
+                                <option value="yes" >Yes</option>
+                                <option value="no" selected="">No</option>
+                            </select>
+                        </label>
+ </div>
+ <div class='galoptions'>
+  <div class="field gallerycap clear">
+                        <label>
+                            <span class="label">Show captions</span>
+                           <select id='showgalcap' class='inputgalcap' name="pingal">
+                                <option value="yes" selected="">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </label>
+ </div>
+   <div class="field galleryanim clear">
+                        <label>
+                            <span class="label">Image animation</span>
+                           <select id='galanim' class='inputgalanim' name="pingalanim">
+                                <option value="slideIn" selected="">slideIn</option>
+								 <option value="fadeIn">fadeIn</option>
+                                <option value="none">None</option>
+                            </select>
+                        </label>
+ </div>
+ </div>
+<a class='getpincode' href='#'>Insert shortcode</a>
+</div>
+</div>
+
+
+</div>
+
+<div id='previewpins'></div>
+</body>
+
+
+
+</html>
+
+

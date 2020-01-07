@@ -1,0 +1,26 @@
+/* Main CSS files */
+@import url('normalize.css');
+@import url('bootstrap.min.css');
+@import url('fa-all.min.css');
+
+/* Additional CSS files */
+@import url('animate.min.css');
+@import url('aos.css');
+@import url('bootstrap-multiselect.css');
+@import url('Chart.min.css');
+@import url('hamburgers.min.css');
+@import url('jquery-ui.min.css');
+@import url('jquery-ui.structure.min.css');
+@import url('jquery-ui.theme.min.css');
+@import url('slick-theme.css');
+@import url('slick.css');
+@import url('wickedcss.min.css');
+
+/* Fonts */
+@import url('fonts.css');
+
+/* Helpers */
+@import url('helpers.css');
+
+/* Site CSS file */
+@import url('style.css');

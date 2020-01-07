@@ -1,0 +1,289 @@
+<?php if (!defined('ABSPATH')) exit; ?>
+
+<?php $color = get_field('case_featured_color'); ?>
+
+<div class="container-fluid py-5 bg-image bottom-gradient parallax-window" data-parallax="scroll" data-speed="0.5" data-image-src="<?php the_post_thumbnail_url(); ?>">
+    <div class="container">
+        <div class="row" style="min-height:50vh;">
+            <div class="col-12 align-self-end">
+                <h1 class="display-1 text-uppercase text-light fjalla-one d-none d-lg-block text-shadow"><?php the_title(); ?></h1>
+                <h1 class="display-5 text-uppercase text-light fjalla-one d-block d-lg-none text-shadow"><?php the_title(); ?></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-5 bg-darkgray">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-light text-center text-lg-left">
+                <?php the_content(); ?>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <?php
+                $postid = get_the_ID();
+                $tags = wp_get_post_tags(get_the_ID());
+                if(count($tags) > 0){
+                    ?>
+                    <ul class="list-inline text-center text-lg-left">
+                        <?php
+                        foreach($tags as $tag){
+                            ?>
+                            <li class="list-inline-item mr-3 mb-3 px-5 py-2 font-weight-bold x-rounded" style="background-color:<?= $color; ?>"><?= $tag->name; ?></li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-5" style="background-color:<?= $color; ?>">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-7">
+                <?php while(have_rows('case_statistics')){the_row(); ?>
+                <div class="row case-statistic py-3">
+                    <div class="col-12 col-lg-8">
+                        <h1 class="display-2 text-center text-lg-left text-dark fjalla-one text-uppercase d-none d-lg-block"><?php the_sub_field('value'); ?></h1>
+                        <h1 class="display-5 text-center text-lg-left text-dark fjalla-one text-uppercase d-block d-lg-none"><?php the_sub_field('value'); ?></h1>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <h1 class="display-2 text-center text-lg-right text-light bayshore text-lowercase d-none d-lg-block"><?php the_sub_field('title'); ?></h1>
+                        <h1 class="display-5 text-center text-lg-right text-light bayshore text-lowercase d-block d-lg-none"><?php the_sub_field('title'); ?></h1>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <div class="col-12 col-lg-4 offset-lg-1 text-center">
+                <img src="<?= get_field('case_statistics_image')['url']; ?>" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-5 bg-darkgray">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center px-0">
+                <?php
+                $banner = get_field('case_banner_type');
+                switch($banner){
+                    case 'image':
+                    ?>
+                    <img src="<?= get_field('case_banner_image')['url']; ?>" alt="" class="img-fluid">
+                    <?php
+                    break;
+                    case 'carousel':
+                    ?>
+                    <div class="row">
+                        <div class="col-1 text-left align-self-center p-0">
+                            <button type="button" class="prev-slide transparent text-light" data-slider="#case_banner_carousel"><i class="fas fa-caret-left"></i></button>
+                        </div>
+                        <div class="col-10" id="case_banner_carousel">
+                            <?php
+                            while(have_rows('case_banner_carousel')){the_row();
+                                ?>
+                                <img src="<?= get_sub_field('image')['url']; ?>" alt="" class="img-fluid">
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="col-1 text-right align-self-center p-0">
+                            <button type="button" class="next-slide transparent text-light" data-slider="#case_banner_carousel"><i class="fas fa-caret-right"></i></button>
+                        </div>
+                    </div>
+                    <?php
+                    break;
+                    case 'video':
+                    ?>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <video src="<?php the_field('case_banner_video'); ?>" class="embed-responsive-item" controls></video>
+                    </div>
+                    <?php
+                    break;
+                    case 'youtube':
+                    ?>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://youtube.com/embed/<?php the_field('case_banner_youtube'); ?>" frameborder="0" class="embed-responsive-item"></iframe>
+                    </div>
+                    <?php
+                    break;
+                    case 'chart':
+                    $chart_type = get_field('case_banner_chart_type');
+                    $chart_data_array = array();
+                    while(have_rows('case_banner_chart_content')){
+                        the_row();
+                        $chart_data_array[] = array(
+                            'name' => get_sub_field('name'),
+                            'value' => get_sub_field('value')
+                        );
+                    }
+                    $chart_data = json_encode($chart_data_array);
+                    $chart_data = str_replace('"', '\"', $chart_data);
+                    ?>
+                    <canvas class="case-chart" width="960" height="540" chart-type="<?= $chart_type ?>" chart-data="<?= $chart_data; ?>"></canvas>
+                    <?php
+                    break;
+                }
+                ?>
+				<?php
+				if(get_field("case_banner_description")){
+					?>
+					<div class="row py-3" style="background-color:<?= $color; ?>">
+						<div class="col-12 col-md-5">
+							<h1 class="text-uppercase text-center text-md-left fjalla-one text-light align-self-center">
+								<?php the_field("case_banner_description_title"); ?>
+							</h1>
+						</div>
+						<div class="col-12 col-md-7 text-light">
+							<?php the_field("case_banner_description_content"); ?>
+						</div>
+					</div>
+					<?php
+				}
+				?>
+            </div>
+        </div>
+        <div class="row bg-light">
+			<?php if(get_field("case_content1_type") == "content"){ ?>
+            <div class="col-12 col-lg-7 align-self-center pl-lg-5 pt-3">
+                <h1 class="display-1 text-uppercase text-center text-lg-left fjalla-one d-none d-lg-block" style="color:<?= $color; ?>"><?php the_field('case_content1_title'); ?></h1>
+                <h1 class="display-5 text-uppercase text-center text-lg-left fjalla-one d-block d-lg-none" style="color:<?= $color; ?>"><?php the_field('case_content1_title'); ?></h1>
+                <p class="mt-4 text-center text-lg-left"><?php the_field('case_content1_text'); ?></p>
+            </div>
+            <div class="col-12 col-lg-5 align-self-center text-center text-lg-right px-0">
+                <img src="<?= get_field('case_content1_image')['url']; ?>" alt="" class="img-fluid">
+            </div>
+			<?php } else if(get_field("case_content1_type") == "image"){ ?>
+			<div class="col-12 p-0 text-center">
+				<img src="<?= get_field("case_content1_static_image")['url']; ?>" class="img-fluid" >
+			</div>
+			<?php } else if(get_field("case_content1_type") == "carousel"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="case-img-carousel">
+					<?php
+					while(have_rows("case_content1_carousel")){
+						the_row();
+						?>
+						<img src="<?= get_sub_field('image')['url']; ?>" class="img-fluid">
+						<?php
+					}
+					?>
+				</div>
+			</div>
+			<?php } else if(get_field("case_content1_type") == "video"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="embed-responsive embed-responsive-16by9">
+					<video class="embed-responsive-item" controls>
+						<source src="<?= get_field("case_content1_video"); ?>" type="video/mp4">
+						Seu navegador não oferece suporte à reprodução de vídeos.
+					</video>
+				</div>
+			</div>
+			<?php } else if(get_field("case_content1_type") == "youtube"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe src="https://youtube.com/embed/<?= get_field("case_content1_youtube"); ?>" frameborder="0" class="embed-responsive-item"></iframe>
+				</div>
+			</div>
+			<?php } ?>
+			<?php
+			if(get_field("case_content1_description")){
+			?>
+			<div class="row py-3" style="background-color:<?= $color; ?>">
+				<div class="col-12 col-md-5">
+					<h1 class="text-uppercase text-center text-md-left fjalla-one text-light align-self-center">
+						<?php the_field("case_content1_description_title"); ?>
+					</h1>
+				</div>
+				<div class="col-12 col-md-7 text-light">
+					<?php the_field("case_content1_description_content"); ?>
+				</div>
+			</div>
+			<?php
+			}
+			?>
+        </div>
+		<div class="row" style="background-color:<?= $color; ?>;">
+			<?php if(get_field("case_content2_type") == "content"){ ?>
+            <div class="col-12 col-lg-5 px-lg-5 align-self-center py-3 text-light text-center">
+                <h1 class="text-light fjalla-one text-uppercase"><?php the_field('case_content2_title'); ?></h1>
+				<?php the_field('case_content2_text'); ?>
+            </div>
+            <div class="col-12 col-lg-7 px-0 align-self-center text-center text-lg-right">
+                <img src="<?= get_field('case_content2_image')['url']; ?>" alt="" class="img-fluid">
+            </div>
+			<?php } else if(get_field("case_content2_type") == "image"){ ?>
+			<div class="col-12 p-0 text-center">
+				<img src="<?= get_field("case_content2_static_image")['url']; ?>" class="img-fluid" >
+			</div>
+			<?php } else if(get_field("case_content2_type") == "carousel"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="case-img-carousel">
+					<?php
+					while(have_rows("case_content2_image_carousel")){
+						the_row();
+						?>
+						<img src="<?= get_sub_field('image')['url']; ?>" class="img-fluid">
+						<?php
+					}
+					?>
+				</div>
+			</div>
+			<?php } else if(get_field("case_content2_type") == "video"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="embed-responsive embed-responsive-16by9">
+					<video class="embed-responsive-item" controls>
+						<source src="<?= get_field("case_content2_video"); ?>" type="video/mp4">
+						Seu navegador não oferece suporte à reprodução de vídeos.
+					</video>
+				</div>
+			</div>
+			<?php } else if(get_field("case_content2_type") == "youtube"){ ?>
+			<div class="col-12 p-0 text-center">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe src="https://youtube.com/embed/<?= get_field("case_content2_youtube"); ?>" frameborder="0" class="embed-responsive-item"></iframe>
+				</div>
+			</div>
+			<?php } ?>
+			<?php
+			if(get_field("case_content2_description")){
+			?>
+			<div class="row py-3" style="background-color:<?= $color; ?>">
+				<div class="col-12 col-md-5">
+					<h1 class="text-uppercase text-center text-md-left fjalla-one text-light align-self-center">
+						<?php the_field("case_content2_description_title"); ?>
+					</h1>
+				</div>
+				<div class="col-12 col-md-7 text-light">
+					<?php the_field("case_content2_description_content"); ?>
+				</div>
+			</div>
+			<?php
+			}
+			?>
+		</div>
+    </div>
+</div>
+
+<div class="container-fluid bg-darkgray">
+    <div class="container bg-light py-5">
+        <div class="row">
+            <div class="col-12">
+                <?php
+                $pin_user = get_field("case_pinterest_user");
+                $pin_folder = get_field("case_pinterest_board");
+                $shortcode = "[pinworks+ type='board' user='".$pin_user."' board='".$pin_folder."' header='yes' gallery='yes' captions='yes' transition='fadeIn' ]";
+                echo do_shortcode($shortcode);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
